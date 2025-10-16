@@ -19,7 +19,10 @@ export const useAuthStore = create((set, get) => ({
     localStorage.removeItem('token');
     set({ isLoggedIn: false, user: null, });
   },
-
+  hasAnyRole: (roles) => {
+    const { user } = get();
+    return roles.includes(user?.role);
+  },
   login: async (userData) => {
   try {
     const response = await apiService.sendData('/auth/login',userData);

@@ -14,16 +14,13 @@ import siteLogo from '../assets/logo.png'
 import { useAuthStore } from "../store/authStore";
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
-  const {logout} = useAuthStore()
+  const {logout,hasAnyRole} = useAuthStore()
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3, path:'/' },
     { id: 'inventory', label: 'Inventory', icon: Package, path:'inventory' },
-    { id: 'anomalies', label: 'Anomalies', icon: AlertTriangle, path:'anomalies' },
-    { id: 'reports', label: 'Reports', icon: TrendingUp, path:'reports' },
-    { id: 'transactions', label: 'Transactions', icon: Activity, path:'transactions' },
-    
-    // { id: 'settings', label: 'Settings', icon: Settings,path:'settings' }
-
+    { id: 'anomalies', label: 'Anomalies', icon: AlertTriangle, path:'anomalies',accesseble:['admin'] },
+    { id: 'reports', label: 'Reports', icon: TrendingUp, path:'reports',accesseble:['admin'] },
+    { id: 'transactions', label: 'Transactions', icon: Activity, path:'transactions' }
   ];
 
   return (
@@ -37,6 +34,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
         <nav className="nav flex-column">
           {menuItems.map(item => {
             const Icon = item.icon;
+            if (!item?.accesseble || (item?.accesseble && hasAnyRole(item.accesseble)))
             return (
               <Link key={item.id}
               className={`btn btn-link text-start text-decoration-none d-flex align-items-center p-2 mb-1 rounded ${
