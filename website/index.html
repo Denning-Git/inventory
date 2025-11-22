@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<!-- FULL WEBSITE STARTS HERE -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalyst Digital Ltd</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+      :root {
+        --primary: #00B4FF;
+        --secondary: #0A192F;
+        --light: #F5F5F7;
+        --text: #1B1B1D;
+        --muted: #6B7280;
+        --card-radius: 18px;
+        --shadow: 0 15px 50px rgba(10, 25, 47, 0.08);
+        --glow: 0 0 0 8px rgba(0, 180, 255, 0.08);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+        background: var(--light);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { text-decoration: none; color: inherit; }
+      img { max-width: 100%; display: block; }
+      .container {
+        width: min(1200px, 92%);
+        margin: 0 auto;
+      }
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        backdrop-filter: blur(12px);
+        background: rgba(245, 245, 247, 0.8);
+        border-bottom: 1px solid rgba(10, 25, 47, 0.06);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--secondary);
+        text-transform: uppercase;
+      }
+      .logo .dot {
+        width: 10px;
+        height: 10px;
+        background: var(--primary);
+        border-radius: 50%;
+        box-shadow: 0 0 0 5px rgba(0, 180, 255, 0.2);
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 18px;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+      }
+      nav li a {
+        font-weight: 500;
+        padding: 10px 14px;
+        border-radius: 12px;
+        transition: all 0.25s ease;
+        color: var(--secondary);
+      }
+      nav li a:hover { background: rgba(0, 180, 255, 0.12); color: var(--secondary); box-shadow: var(--glow); }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+      }
+      .btn-primary { background: linear-gradient(135deg, #00B4FF, #00A0E6); color: white; box-shadow: var(--shadow); }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 45px rgba(0, 180, 255, 0.35); }
+      .btn-secondary { background: white; color: var(--secondary); border: 1px solid rgba(10, 25, 47, 0.12); }
+      .btn-secondary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+      .cta { margin-left: 12px; }
+      .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+      .hamburger span { width: 24px; height: 3px; background: var(--secondary); border-radius: 10px; transition: all 0.3s ease; }
+      .mobile-menu { display: none; flex-direction: column; gap: 12px; padding: 14px; border-radius: 14px; background: rgba(255,255,255,0.95); box-shadow: var(--shadow); }
+      /* Hero */
+      section { padding: 90px 0; }
+      .hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: center; gap: 40px; }
+      .badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(0, 180, 255, 0.12); color: var(--secondary); font-weight: 600; }
+      .hero h1 { font-size: clamp(32px, 4vw, 48px); margin: 16px 0 12px; color: var(--secondary); line-height: 1.2; }
+      .hero p { color: var(--muted); margin: 0 0 22px; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+      .note { color: var(--muted); margin-top: 16px; font-size: 14px; }
+      .hero-card {
+        position: relative;
+        background: white;
+        border-radius: var(--card-radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .hero-card::before {
+        content: '';
+        position: absolute;
+        inset: -40% auto auto -30%;
+        width: 260px; height: 260px;
+        background: radial-gradient(circle at 30% 30%, rgba(0,180,255,0.35), transparent 60%);
+        filter: blur(10px);
+        z-index: -1;
+      }
+      .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-top: 16px; }
+      .metric { padding: 16px; border-radius: 14px; background: var(--light); border: 1px solid rgba(10,25,47,0.06); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); }
+      .metric .value { font-weight: 700; font-size: 22px; color: var(--secondary); }
+      .metric .label { color: var(--muted); font-size: 14px; }
+      /* About */
+      .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: start; }
+      .section-label { display: inline-flex; padding: 8px 14px; border-radius: 999px; background: rgba(10,25,47,0.06); color: var(--secondary); font-weight: 600; }
+      .section-title { font-size: clamp(28px, 3vw, 40px); margin: 14px 0 14px; color: var(--secondary); line-height: 1.25; }
+      .card-panel { background: white; padding: 22px; border-radius: var(--card-radius); box-shadow: var(--shadow); display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+      .card-panel .item { padding: 14px; border-radius: 14px; background: var(--light); border: 1px solid rgba(10,25,47,0.07); }
+      .card-panel .item h4 { margin: 0 0 8px; color: var(--secondary); }
+      .card-panel .item p { margin: 0; color: var(--muted); font-size: 14px; }
+      ul.clean { padding-left: 18px; color: var(--muted); }
+      ul.clean li { margin-bottom: 8px; }
+      /* Services */
+      .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+      .service-card { background: white; padding: 20px; border-radius: var(--card-radius); box-shadow: var(--shadow); position: relative; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; border: 1px solid rgba(10,25,47,0.06); }
+      .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0, 180, 255, 0.18); }
+      .service-tag { display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(0, 180, 255, 0.12); color: var(--secondary); font-weight: 600; font-size: 13px; }
+      .service-card h4 { margin: 12px 0 8px; color: var(--secondary); font-size: 20px; }
+      .service-card p { margin: 0 0 12px; color: var(--muted); }
+      .service-list { padding-left: 16px; margin: 0; color: var(--muted); }
+      .service-list li { margin-bottom: 6px; }
+      /* Process */
+      .process { text-align: center; }
+      .process-grid { margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+      .step { background: white; padding: 18px; border-radius: var(--card-radius); box-shadow: var(--shadow); border: 1px solid rgba(10,25,47,0.06); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+      .step:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 180, 255, 0.16); }
+      .step-circle { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(0, 180, 255, 0.12); color: var(--secondary); font-weight: 700; margin: 0 auto 10px; box-shadow: inset 0 0 0 1px rgba(0, 180, 255, 0.35); }
+      .step h5 { margin: 8px 0 6px; color: var(--secondary); font-size: 17px; }
+      .step p { margin: 0; color: var(--muted); font-size: 14px; }
+      /* Contact */
+      form { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+      .full { grid-column: 1 / -1; }
+      input, select, textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(10,25,47,0.12);
+        background: white;
+        font-family: inherit;
+        font-size: 15px;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+      input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0, 180, 255, 0.18); }
+      textarea { min-height: 120px; resize: vertical; }
+      .contact-card { background: white; padding: 24px; border-radius: var(--card-radius); box-shadow: var(--shadow); }
+      .contact-details { color: var(--muted); }
+      .contact-details strong { color: var(--secondary); }
+      /* Footer */
+      footer { background: #0F1D36; color: #E5E7EB; padding: 60px 0 26px; margin-top: 60px; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+      .footer-grid h4 { margin: 0 0 10px; color: white; }
+      .footer-grid a { color: #E5E7EB; display: block; margin-bottom: 8px; transition: color 0.2s ease; }
+      .footer-grid a:hover { color: var(--primary); }
+      .footer-bottom { margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; color: #AEB7C5; font-size: 14px; }
+      /* Responsive */
+      @media (max-width: 900px) {
+        nav ul { display: none; }
+        .cta { display: none; }
+        .hamburger { display: flex; }
+        header { position: sticky; top: 0; }
+      }
+      @media (max-width: 600px) {
+        section { padding: 70px 0; }
+        .hero { gap: 24px; }
+        .hero-card { order: -1; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container nav">
+        <div class="logo">
+          <span class="dot"></span>
+          <span>Katalyst Digital</span>
+        </div>
+        <nav>
+          <ul id="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="cta">
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Consultation</button>
+        </div>
+        <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="mobile-menu" id="mobileMenu">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Consultation</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="container hero">
+      <div>
+        <span class="badge">Digital Transformation Partner</span>
+        <h1>Accelerating technology-driven growth for modern businesses.</h1>
+        <p>We partner with ambitious teams to architect scalable products, modernize legacy systems, and build digital experiences that customers love. From strategy to execution, we deliver with precision.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Get a Free Consultation</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+        </div>
+        <p class="note">Based in Kigali, Rwanda — serving Africa.</p>
+      </div>
+      <div class="hero-card">
+        <h3 style="margin:0 0 8px;color:var(--secondary);">Growth with confidence</h3>
+        <p style="margin:0 0 12px;color:var(--muted);">Custom technology, rapid delivery, and embedded teams that keep your roadmap moving.</p>
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="value">+38%</div>
+            <div class="label">Faster delivery</div>
+          </div>
+          <div class="metric">
+            <div class="value">98%</div>
+            <div class="label">Client satisfaction</div>
+          </div>
+        </div>
+        <div class="metric-grid" style="margin-top:10px;">
+          <div class="metric">
+            <div class="value">24/7</div>
+            <div class="label">Technical support</div>
+          </div>
+          <div class="metric">
+            <div class="value">∞</div>
+            <div class="label">Long-term partnership</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="container split">
+      <div>
+        <span class="section-label">About Katalyst Digital</span>
+        <h2 class="section-title">We unlock the hidden potential inside your business.</h2>
+        <p style="color:var(--muted);">Katalyst Digital bridges strategy, engineering, and design to accelerate growth. We combine deep technical expertise with local market insight to build products that scale across Africa.</p>
+        <ul class="clean">
+          <li>Product strategy grounded in measurable outcomes.</li>
+          <li>Cloud-native software engineered for resilience.</li>
+          <li>Design systems that keep teams aligned and shipping fast.</li>
+          <li>Long-term partnership with dedicated squads and support.</li>
+        </ul>
+      </div>
+      <div class="card-panel">
+        <div class="item">
+          <h4>Mission</h4>
+          <p>Equip businesses with modern technology that transforms operations.</p>
+        </div>
+        <div class="item">
+          <h4>Vision</h4>
+          <p>Be the catalyst that elevates African enterprises to global standards.</p>
+        </div>
+        <div class="item">
+          <h4>Values</h4>
+          <p>Integrity, curiosity, accountability, and relentless delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="container">
+      <div style="text-align:center; margin-bottom:28px;">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-title" style="margin-bottom:10px;">Services built to move your roadmap faster.</h2>
+        <p style="color:var(--muted); max-width:720px; margin:0 auto;">A full-stack team spanning strategy, engineering, design, and long-term support. Choose the engagement that fits your goals.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-tag">A</span>
+          <h4>Strategic Consulting</h4>
+          <p>Translate business goals into clear technology roadmaps.</p>
+          <ul class="service-list">
+            <li>Digital transformation blueprints</li>
+            <li>Product & platform strategy</li>
+            <li>Architecture assessments</li>
+            <li>Change management advisory</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tag">B</span>
+          <h4>Software Development</h4>
+          <p>Full-cycle engineering with CI/CD, testing, and observability.</p>
+          <ul class="service-list">
+            <li>Backend APIs & microservices</li>
+            <li>Data engineering & integrations</li>
+            <li>DevOps, CI/CD pipelines</li>
+            <li>Performance optimization</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tag">C</span>
+          <h4>Web & Mobile Development</h4>
+          <p>Responsive, high-performing web and mobile applications.</p>
+          <ul class="service-list">
+            <li>Progressive web apps</li>
+            <li>iOS & Android builds</li>
+            <li>Cross-platform frameworks</li>
+            <li>API-first architectures</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tag">D</span>
+          <h4>UI/UX & Creative</h4>
+          <p>Human-centered experiences with scalable design systems.</p>
+          <ul class="service-list">
+            <li>User research & journeys</li>
+            <li>Design systems & pattern libraries</li>
+            <li>Interactive prototypes</li>
+            <li>Brand identity refresh</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tag">E</span>
+          <h4>Outsourced IT Teams</h4>
+          <p>Embedded squads that plug into your workflows and velocity.</p>
+          <ul class="service-list">
+            <li>Dedicated engineers & PMs</li>
+            <li>24/7 ops & support</li>
+            <li>Sprint-based delivery</li>
+            <li>Onshore/offshore blend</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tag">F</span>
+          <h4>Long-Term Partnerships</h4>
+          <p>Strategic alliances focused on continuous improvement.</p>
+          <ul class="service-list">
+            <li>Roadmap co-creation</li>
+            <li>Analytics & optimization</li>
+            <li>Security & compliance</li>
+            <li>Training & enablement</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="container process">
+      <span class="section-label">Delivery Framework</span>
+      <h2 class="section-title" style="margin:10px 0 8px;">How We Work</h2>
+      <p style="color:var(--muted); max-width:760px; margin:0 auto 20px;">Transparent, iterative, and outcome-driven. Each step is designed to reduce risk, maintain momentum, and keep stakeholders aligned.</p>
+      <div class="process-grid">
+        <div class="step"><div class="step-circle">1</div><h5>Discovery</h5><p>Stakeholder interviews & objectives.</p></div>
+        <div class="step"><div class="step-circle">2</div><h5>Scope & Architecture</h5><p>Requirements, tech stack, guardrails.</p></div>
+        <div class="step"><div class="step-circle">3</div><h5>Design</h5><p>Experience maps, prototypes, systems.</p></div>
+        <div class="step"><div class="step-circle">4</div><h5>Development</h5><p>Sprints with CI/CD and code reviews.</p></div>
+        <div class="step"><div class="step-circle">5</div><h5>QA</h5><p>Automated & manual testing cycles.</p></div>
+        <div class="step"><div class="step-circle">6</div><h5>Deployment</h5><p>Cloud-native release with monitoring.</p></div>
+        <div class="step"><div class="step-circle">7</div><h5>Support</h5><p>Runbooks, observability, SLAs.</p></div>
+        <div class="step"><div class="step-circle">∞</div><h5>Partnership</h5><p>Continuous optimization & growth.</p></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container split">
+      <div>
+        <span class="section-label">Contact</span>
+        <h2 class="section-title">Let’s Build Something Great</h2>
+        <p style="color:var(--muted);">Tell us about your goals and we’ll assemble the right team to get you there. We respond within one business day.</p>
+        <div class="contact-details">
+          <p><strong>Email:</strong> info@katalystdigital.com</p>
+          <p><strong>Phone:</strong> +250 788 329 919</p>
+          <p><strong>Location:</strong> Kigali, Rwanda</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type="email" name="email" placeholder="Work Email" required>
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+          <input type="text" name="company" placeholder="Company" required>
+          <select name="service" required>
+            <option value="">Select a service</option>
+            <option>Strategic Consulting</option>
+            <option>Software Development</option>
+            <option>Web & Mobile Development</option>
+            <option>UI/UX & Creative</option>
+            <option>Outsourced IT Teams</option>
+            <option>Long-Term Partnerships</option>
+          </select>
+          <textarea name="message" class="full" placeholder="Tell us about your project" required></textarea>
+          <button class="btn btn-primary full" type="submit">Submit Request</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="logo" style="color:white; margin-bottom:10px;"><span class="dot"></span><span>Katalyst Digital</span></div>
+            <p style="color:#AEB7C5; margin:0;">We partner with ambitious teams to build technology that scales and experiences customers love.</p>
+          </div>
+          <div>
+            <h4>Navigate</h4>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#process">Process</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <p style="margin:0 0 6px; color:#AEB7C5;">Email: info@katalystdigital.com</p>
+            <p style="margin:0 0 6px; color:#AEB7C5;">Phone: +250 788 329 919</p>
+            <p style="margin:0; color:#AEB7C5;">Kigali, Rwanda</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="year"></span> Katalyst Digital Ltd. All rights reserved.</span>
+          <span>We are the catalyst that accelerates technology-driven growth.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        mobileMenu.style.display = open ? 'flex' : 'none';
+        hamburger.setAttribute('aria-expanded', open);
+        hamburger.classList.toggle('active', open);
+      });
+
+      // Close mobile menu on link click
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.style.display = 'none';
+          mobileMenu.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.classList.remove('active');
+        });
+      });
+
+      // Hamburger animation
+      const spans = hamburger.querySelectorAll('span');
+      const toggleHamburger = () => {
+        if (hamburger.classList.contains('active')) {
+          spans[0].style.transform = 'translateY(8px) rotate(45deg)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+        } else {
+          spans[0].style.transform = '';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = '';
+        }
+      };
+      hamburger.addEventListener('click', toggleHamburger);
+
+      // Contact form submission
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you! Your request has been received.');
+        form.reset();
+      });
+
+      // Year in footer
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
